@@ -1,0 +1,13 @@
+# name: test/sql/opendal.test
+# description: test opendal extension filesystem
+# group: [sql]
+
+require opendal
+
+statement ok
+COPY (SELECT 1 AS id, 'a' AS v) TO '__TEST_DIR__/opendal.csv' (HEADER true);
+
+query II
+SELECT * FROM 'opendal+fs://__TEST_DIR__/opendal.csv';
+----
+1	a
